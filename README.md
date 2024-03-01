@@ -1,6 +1,9 @@
 # Homeassistent-Hargassner
 
 Hargassner boiler is sending out data on telnet port 23. Different firmwares have different index for the data. To be able to see and test out what index of data you are interesseted in you can use this method.
+Another approach could be to use the nano_pk script
+https://github.com/TheRealKillaruna/nano_pk?tab=readme-ov-file#how-to-use-with-other-hargassner-models-or-different-firmware-versions
+
 
 Use the file editor to add a tcp sensor in **configuration.yaml**
 
