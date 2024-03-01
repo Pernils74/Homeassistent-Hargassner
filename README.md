@@ -7,17 +7,16 @@ Add this this 2 sensors
 <code>
  sensor:
   - platform: tcp
-    name: Panna_telnet
+    name: boiler_telnet
     host: 192.168.1.XX   # change to your boiler ip
     port: 23
     #timeout: 5
     payload: "\n"
     scan_interval: 300   
     value_template: "{{ value[:254] }}"   # max 255 byte is allowed in a sensor state
-
  - platform: tcp
-    name: Panna_telnet2
-    host: 192.168.1.XX
+    name: boiler_telnet2
+    host: 192.168.1.XX   # change to your boiler ip
     port: 23
     #timeout: 5
     payload: "\n"
@@ -25,21 +24,50 @@ Add this this 2 sensors
     value_template: "{{ value[254:500] }}"   # max 255 byte is allowed
 </code>
 
+Save and restart homeasistent.
 
+This new sensor should now be visibale under **Developer tools -> States**
 
-dhjhkjahkcjh a
-**test**
+In **Developer tools -> Template** past this in
 
 <code>
-dlksdöjjjjjjjjjjjjjjjlköl
+{{ states('sensor.boiler_telnet').split(" ") [7] + "   Boiler temp " }}
+{% set i = 1 %}
+{% for item in states('sensor.boiler_telnet').split(" ") -%}
+{{ loop.index }} {{  item + '\n' }}
+{%- endfor %}
 </code>
 
+In the given list you see the values index. From this info you can edit the **{{ states('sensor.boiler_telnet').split(" ") [7] + "   Boiler temp " }}** to fit you needs
 
+When you have found your desired values, for example...
 
-`jkdsljdslkjd
-dädds
-`
+<code>
+{{ states('sensor.boiler_telnet').split(" ") [22] + "   Acc temp top" }}
+{{ states('sensor.boiler_telnet').split(" ") [23] + "   Acc temp middle" }}
+{{ states('sensor.boiler_telnet').split(" ") [24] + "   Acc temp bottom" }}
+</code>
 
+You can edit this sensor skeleton
+<code>
+ sensor:
+  - platform: tcp
+    name: Acc temp top
+    host: 192.168.1.123   # change to your boiler ip
+    port: 23
+    #timeout: 5
+    payload: "\n"
+    scan_interval: 300   
+    value_template: "{{ value.split(" ") [22] }}"   
+sensor:
+  - platform: tcp
+    name: Acc temp middle
+    host: 192.168.1.123   # change to your boiler ip
+    port: 23
+    #timeout: 5
+    payload: "\n"
+    scan_interval: 300   
+    value_template: "{{ value.split(" ") [23] }}"   
+</code>
 
-
-> ökaöksakskac
+And paste it in configuration.yaml
