@@ -26,7 +26,7 @@ Add this this 2 sensors
 
 Save and restart homeasistent.
 
-This new sensor should now be visibale under **Developer tools -> States**
+This new sensor should now be visible under **Developer tools -> States**
 
 In **Developer tools -> Template** past this in
 
@@ -38,7 +38,9 @@ In **Developer tools -> Template** past this in
 {%- endfor %}
 </code>
 
-In the given list you see the values index. From this info you can edit the **{{ states('sensor.boiler_telnet').split(" ") [7] + "   Boiler temp " }}** to fit you needs
+In the given list you see the values index. 
+
+From this info you can edit the **{{ states('sensor.boiler_telnet').split(" ") [7] + "   Boiler temp " }}** to fit you needs
 
 When you have found your desired values, for example...
 
@@ -48,7 +50,9 @@ When you have found your desired values, for example...
 {{ states('sensor.boiler_telnet').split(" ") [24] + "   Acc temp bottom" }}
 </code>
 
-You can edit this sensor skeleton
+
+You can match it in this sensor skeleton.
+
 <code>
  sensor:
   - platform: tcp
@@ -70,4 +74,4 @@ sensor:
     value_template: "{{ value.split(" ") [23] }}"   
 </code>
 
-And paste it in configuration.yaml
+And paste it in configuration.yaml and save and restart homeassistant
