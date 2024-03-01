@@ -1,6 +1,8 @@
 # Homeassistent-Hargassner
 
-Use the file editor to add a tcp sensor in configuration.yaml 
+Hargassner boiler is sending out data on telnet port 23. Different firmwares have different index for the data. To be able to see and test out what index of data you are interesseted in you can use this method.
+
+Use the file editor to add a tcp sensor in **configuration.yaml**
 
 Add this this 2 sensors
 
@@ -40,7 +42,7 @@ In **Developer tools -> Template** past this in
 
 In the given list you see the values index. 
 
-From this info you can edit the **{{ states('sensor.boiler_telnet').split(" ") [7] + "   Boiler temp " }}** to fit you needs
+From this info you can edit the <code> {{ states('sensor.boiler_telnet').split(" ") [7] + "   Boiler temp " }} </code> to fit you needs
 
 When you have found your desired values, for example...
 
@@ -74,4 +76,4 @@ sensor:
     value_template: "{{ value.split(" ") [23] }}"   
 </code>
 
-And paste it in configuration.yaml and save and restart homeassistant
+And paste it in **configuration.yaml** and save and restart homeassistant
