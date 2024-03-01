@@ -13,7 +13,7 @@ Add this this 2 sensors
  sensor:
   - platform: tcp
     name: boiler_telnet
-    host: 192.168.1.XX   # change to your boiler ip
+    host: 192.168.1.123   # change to your boiler ip
     port: 23
     #timeout: 5
     payload: "\n"
@@ -21,7 +21,7 @@ Add this this 2 sensors
     value_template: "{{ value[:254] }}"   # max 255 byte is allowed in a sensor state
  - platform: tcp
     name: boiler_telnet2
-    host: 192.168.1.XX   # change to your boiler ip
+    host: 192.168.1.123   # change to your boiler ip
     port: 23
     #timeout: 5
     payload: "\n"
@@ -61,7 +61,7 @@ You can match it in this sensor skeleton.
 <code>
  sensor:
   - platform: tcp
-    name: Acc temp top
+    name: Acc_temp_top
     host: 192.168.1.123   # change to your boiler ip
     port: 23
     #timeout: 5
@@ -70,7 +70,7 @@ You can match it in this sensor skeleton.
     value_template: "{{ value.split(" ") [22] }}"   
 sensor:
   - platform: tcp
-    name: Acc temp middle
+    name: Acc_temp_middle
     host: 192.168.1.123   # change to your boiler ip
     port: 23
     #timeout: 5
