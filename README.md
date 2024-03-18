@@ -63,33 +63,81 @@ From this info you can edit the <code> {{ states('sensor.boiler_telnet').split("
 When you have found your desired values, for example...
 
 <code>
-{{ states('sensor.boiler_telnet').split(" ") [22] + "   Acc temp top" }}
-{{ states('sensor.boiler_telnet').split(" ") [23] + "   Acc temp middle" }}
-{{ states('sensor.boiler_telnet').split(" ") [24] + "   Acc temp bottom" }}
+{{ states('sensor.boiler_telnet').split(" ") [21] + "   Acc temp top" }}
+{{ states('sensor.boiler_telnet').split(" ") [22] + "   Acc temp middle" }}
+{{ states('sensor.boiler_telnet').split(" ") [23] + "   Acc temp bottom" }}
 </code>
 
 
 You can match it in this sensor skeleton.
 
+```python
 <code>
- sensor:
-  - platform: tcp
-    name: Acc_temp_top
-    host: 192.168.1.123   # change to your boiler ip
-    port: 23
+- platform: tcp
+  name: Panna_telnet
+  host: 192.168.1.50
+  port: 23
     #timeout: 5
-    payload: "\n"
-    scan_interval: 300   
-    value_template: "{{ value.split(" ") [22] }}"   
-sensor:
-  - platform: tcp
-    name: Acc_temp_middle
-    host: 192.168.1.123   # change to your boiler ip
-    port: 23
-    #timeout: 5
-    payload: "\n"
-    scan_interval: 300   
-    value_template: "{{ value.split(" ") [23] }}"   
+  payload: "\n"
+  scan_interval: 30   
+  value_template: "{{ value[:254] }}"   # max 255 byte is allowed
+  
+- platform: tcp
+  name: panna_telnet2
+  host: 192.168.1.50
+  port: 23
+   #timeout: 5
+  payload: "\n"
+  scan_interval: 30       
+  value_template: "{{ value[254:500] }}"   # max 255 byte is allowed
+
+- platform: template
+  sensors:
+    panna_acc_temp_top:
+      #state_class: measurement
+#      friendly_name:  acc_temp_top
+      unit_of_measurement: °C
+      device_class: temperature
+      value_template: "{{ states('sensor.panna_telnet').split(' ')[21] }} "   #   Acctank temp uppe
+
+    panna_acc_temp_center:
+      unit_of_measurement: °C
+      device_class: temperature
+      value_template:  >
+        {{ states('sensor.panna_telnet').split(' ') [22] }}
+        
+    panna_acc_temp_bottom:
+      unit_of_measurement: °C
+      device_class: temperature
+      value_template: >
+          {{ states('sensor.panna_telnet').split(' ') [23] }} 
+
+    panna_temp:
+      unit_of_measurement: °C
+      device_class: temperature
+      value_template: "{{ states('sensor.panna_telnet').split(' ')[4] }} " 
+
+    panna_fluegas_temp:
+      unit_of_measurement: °C
+      device_class: temperature
+      value_template: "{{ states('sensor.panna_telnet').split(' ')[6] }} " 
+
+    panna_effekt:
+      unit_of_measurement: "%"
+      device_class: power_factor
+      value_template: "{{ states('sensor.panna_telnet').split(' ')[5] }} " 
+    
+    panna_temp_ute:
+      unit_of_measurement: °C
+      device_class: temperature
+      value_template: "{{ states('sensor.panna_telnet').split(' ')[73] }} " 
+
+    panna_temp_ute_medel:
+      unit_of_measurement: °C
+      device_class: temperature
+      value_template: "{{ states('sensor.panna_telnet').split(' ')[74] }} " 
 </code>
+
+```
 
 And paste it in **configuration.yaml** and save and restart homeassistant
