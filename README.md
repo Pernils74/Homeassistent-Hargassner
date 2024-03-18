@@ -38,7 +38,7 @@ In **Developer tools -> Template** past this in
 <code>
 {#  Paste your loggstring bellow #}
 {% set loggstring="
-<DAQPRJ><ANALOG><CHANNEL id='0' name='ZK' dop='0'/><CHANNEL id='1' name='O2' unit='%'/><CHANNEL id='2' name='O2soll' unit='%'/><CHANNEL id='3' name='TK' unit='°C'/><CHANNEL id='4' name='TKsoll' unit='°C'/><CHANNEL id='5' name='TRL' unit='°C'/><CHANNEL id='6' name='TRLsoll' unit='°C'/></DIGITAL></DAQPRJ>
+<DAQPRJ><ANALOG><CHANNEL id='0' name='ZK' dop='0'><CHANNEL id='1' name='O2' unit='%'><CHANNEL id='2' name='O2soll' unit='%'><CHANNEL id='3' name='TK' unit='°C'><CHANNEL id='4' name='TKsoll' unit='°C'><CHANNEL id='5' name='TRL' unit='°C'><CHANNEL id='6' name='TRLsoll' unit='°C'></DIGITAL></DAQPRJ>
 "-%}
 {% set boiler = loggstring.split('<DAQPRJ><ANALOG><') [1] -%}
 
