@@ -9,7 +9,8 @@ Use the file editor to add a tcp sensor in **configuration.yaml**
 
 Add this this 2 sensors
 
-<code>
+```python
+
  sensor:
   - platform: tcp
     name: boiler_telnet
@@ -27,7 +28,8 @@ Add this this 2 sensors
     payload: "\n"
     scan_interval: 300       
     value_template: "{{ value[254:500] }}"   # max 255 byte is allowed
-</code>
+
+```
 
 Save and restart homeasistent.
 
